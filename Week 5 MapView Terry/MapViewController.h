@@ -8,19 +8,25 @@
 
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
-
 #import <CoreLocation/CoreLocation.h>
 
 @interface MapViewController : UIViewController
-<CLLocationManagerDelegate, MKMapViewDelegate>
+<CLLocationManagerDelegate, MKMapViewDelegate, NSURLConnectionDelegate>
 
 @property CLLocationManager *locationManager;
 
-
 @property (strong, nonatomic) IBOutlet UIImageView *myImageView;
-
 @property (strong, nonatomic) IBOutlet MKMapView *myMapView;
 
+@property (strong, nonatomic) NSMutableData *responseData;
+
+
 - (IBAction)segmentMapSelection:(id)sender;
+
+
+//class methods
+
+- (void) getDataFromAPI;
+
 
 @end

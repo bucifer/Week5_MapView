@@ -19,18 +19,31 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
     
-    self.myImageView.image = [UIImage imageNamed:@"bulbasaur.png"];
-    
     self.myMapView.delegate = self;
     //you need to set the delegate of the mapview to the Viewcontroller so that the Viewcontroller starts listening to all the mapview's delegeate methods - i forgot this and that's why its update methods didn't work
     
     self.locationManager = [[CLLocationManager alloc]init];
     [self.locationManager setDelegate:self];
     [self.locationManager setDesiredAccuracy:kCLLocationAccuracyBest];
+    [self.locationManager startUpdatingLocation];
+    self.responseData = [NSMutableData data];
+    [self getDataFromAPI];
     
     self.myMapView.showsUserLocation = YES;
 
 }
+
+- (void)getDataFromAPI {
+    //Create the request for asynchronous download
+    
+    NSString *requestString = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=%f,%f&radius=500&types=restaurant&key=AIzaSyCdMoZiea0Z96EhH8cc3No7KJHv2rjey_c", self.locationManager.location.coordinate.latitude, self.locationManager.location.coordinate.longitude];
+    NSURL *APIRequestURL = [NSURL URLWithString:requestString];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:APIRequestURL];
+    request.HTTPMethod = @"GET";
+    //Fire the request you made before
+    NSURLConnection *connect = [[NSURLConnection alloc] initWithRequest: request delegate: self];
+}
+
 
 - (void)didReceiveMemoryWarning
 {
@@ -69,6 +82,47 @@
     
     [self.myMapView addAnnotation:annotation];
     [self.myMapView selectAnnotation:annotation animated:YES];
+}
+
+#pragma mark NSURLConnection Delegate Methods
+
+- (void) connection:(NSURLConnection* )connection didReceiveResponse:(NSURLResponse *)response {
+    //this handler, gets hit ONCE
+
+}
+
+- (void)connection: (NSURLConnection *)connection didReceiveData:(NSData *) data {
+    //this handler, gets hit SEVERAL TIMES
+    //Append new data to the instance variable everytime new data comes in
+    
+    [self.responseData appendData:data];
+
+}
+
+- (NSCachedURLResponse *)connection:(NSURLConnection *)connection willCacheResponse:(NSCachedURLResponse *)cachedResponse {
+    //Return nil to indicate not necessary to store a cached response for this connection
+    return nil;
+}
+
+- (void)connectionDidFinishLoading:(NSURLConnection *)connection {
+    //this handler, gets hit ONCE
+    // The request is complete and data has been received
+    // You can parse the stuff in your instance variable now or do whatever you want
+
+    NSLog(@"connection finished");
+    NSLog(@"Succeeded! Received %d bytes of data",[self.responseData length]);
+    //Convert your responseData object
+    
+    NSError *myError = nil;
+    NSDictionary *responseDataInNSDictionary = [NSJSONSerialization JSONObjectWithData:self.responseData options:NSJSONReadingMutableLeaves error:&myError];
+    
+    NSLog(responseDataInNSDictionary.description);
+    
+}
+
+- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
+    // The request has failed for some reason!
+    // Check the error var
 }
 
 
