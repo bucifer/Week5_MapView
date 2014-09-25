@@ -40,6 +40,9 @@
                                     <segment title="Hybrid"/>
                                     <segment title="Satelite"/>
                                 </segments>
+                                <connections>
+                                    <action selector="segmentMapSelection:" destination="SNL-uB-CTe" eventType="valueChanged" id="KJE-UD-jjs"/>
+                                </connections>
                             </segmentedControl>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>

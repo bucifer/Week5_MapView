@@ -21,4 +21,6 @@
 
 @property (strong, nonatomic) IBOutlet MKMapView *myMapView;
 
+- (IBAction)segmentMapSelection:(id)sender;
+
 @end
