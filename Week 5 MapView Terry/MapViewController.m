@@ -18,6 +18,9 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
+    
+    self.myImageView.image = [UIImage imageNamed:@"bulbasaur.png"];
+
 }
 
 - (void)didReceiveMemoryWarning

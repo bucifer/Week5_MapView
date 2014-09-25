@@ -22,6 +22,7 @@
 		AA9AA35E19D472F900621939 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = AA9AA35C19D472F900621939 /* InfoPlist.strings */; };
 		AA9AA36019D472F900621939 /* Week_5_MapView_TerryTests.m in Sources */ = {isa = PBXBuildFile; fileRef = AA9AA35F19D472F900621939 /* Week_5_MapView_TerryTests.m */; };
 		AA9AA36A19D473AF00621939 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA9AA36919D473AF00621939 /* MapKit.framework */; };
+		AA9AA36E19D4835800621939 /* bulbasaur.png in Resources */ = {isa = PBXBuildFile; fileRef = AA9AA36D19D4835800621939 /* bulbasaur.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +56,7 @@
 		AA9AA35D19D472F900621939 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		AA9AA35F19D472F900621939 /* Week_5_MapView_TerryTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Week_5_MapView_TerryTests.m; sourceTree = "<group>"; };
 		AA9AA36919D473AF00621939 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		AA9AA36D19D4835800621939 /* bulbasaur.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bulbasaur.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -121,6 +123,7 @@
 				AA9AA34A19D472F800621939 /* MapViewController.m */,
 				AA9AA34319D472F800621939 /* AppDelegate.h */,
 				AA9AA34419D472F800621939 /* AppDelegate.m */,
+				AA9AA36D19D4835800621939 /* bulbasaur.png */,
 				AA9AA34C19D472F800621939 /* Images.xcassets */,
 				AA9AA33B19D472F800621939 /* Supporting Files */,
 			);
@@ -234,6 +237,7 @@
 			files = (
 				AA9AA34D19D472F800621939 /* Images.xcassets in Resources */,
 				AA9AA33F19D472F800621939 /* InfoPlist.strings in Resources */,
+				AA9AA36E19D4835800621939 /* bulbasaur.png in Resources */,
 				AA9AA34819D472F800621939 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -17,6 +17,8 @@
 @property CLLocationManager *locationManager;
 
 
+@property (strong, nonatomic) IBOutlet UIImageView *myImageView;
 
+@property (strong, nonatomic) IBOutlet MKMapView *myMapView;
 
 @end
