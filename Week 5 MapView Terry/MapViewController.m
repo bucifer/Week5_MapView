@@ -36,7 +36,7 @@
     TTTCoordinate.longitude = -73.990070;
     [TTTannotation setCoordinate:TTTCoordinate];
     [TTTannotation setTitle:@"TurnToTech"];
-    TTTannotation.subtitle = @"Subtitle: You are here!!!";
+    TTTannotation.subtitle = @"Subtitle: TurnToTech Office is here!!!!";
     [self.myMapView addAnnotation:TTTannotation];
     [self.myMapView selectAnnotation:TTTannotation animated:YES];
 }
@@ -90,7 +90,7 @@
     MKPointAnnotation *annotation = [[MKPointAnnotation alloc]init];
     [annotation setCoordinate:userLocation.coordinate];
     [annotation setTitle:@"You are here"];
-    annotation.subtitle = @"I'm telling you that you are here as a subtitle";
+    annotation.subtitle = @"GPS say that you are here";
     
     [self.myMapView addAnnotation:annotation];
     [self.myMapView selectAnnotation:annotation animated:YES];
@@ -134,6 +134,20 @@
         NSDictionary *restaurantObject = resultsArray[i];
         NSString *restaurantName = [restaurantObject objectForKey:@"name"];
         NSLog(@"%@", restaurantName);
+        NSDictionary *geometryObject = [restaurantObject objectForKey:@"geometry"];
+        NSDictionary *locationObject = [geometryObject objectForKey:@"location"];
+        NSLog(@"%@ %@", [locationObject objectForKey:@"lat"], [locationObject objectForKey:@"lng"]);
+        
+        //Place the pin on these restaurants
+        MKPointAnnotation *annotation = [[MKPointAnnotation alloc]init];
+        
+        CLLocationCoordinate2D restaurantCoordinate = CLLocationCoordinate2DMake([[locationObject objectForKey:@"lat"] doubleValue], [[locationObject objectForKey:@"lng"] doubleValue]);
+        
+        [annotation setCoordinate:restaurantCoordinate];
+        [annotation setTitle:restaurantName];
+        annotation.subtitle = [restaurantObject objectForKey:@"icon"];
+        
+        [self.myMapView addAnnotation:annotation];
     }
     
 }
