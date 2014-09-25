@@ -21,28 +21,22 @@
     
     self.myImageView.image = [UIImage imageNamed:@"bulbasaur.png"];
     
+    self.myMapView.delegate = self;
+    //you need to set the delegate of the mapview to the Viewcontroller so that the Viewcontroller starts listening to all the mapview's delegeate methods - i forgot this and that's why its update methods didn't work
+    
     self.locationManager = [[CLLocationManager alloc]init];
     [self.locationManager setDelegate:self];
     [self.locationManager setDesiredAccuracy:kCLLocationAccuracyBest];
     [self.locationManager startUpdatingLocation];
 
     
-    self.myMapView.showsUserLocation = YES;
-
+    //Place a single pin
+    MKPointAnnotation *annotation = [[MKPointAnnotation alloc]init];
+    [annotation setCoordinate:self.locationManager.location.coordinate];
+    [annotation setTitle:@"YO"];
+    [self.myMapView addAnnotation:annotation];
     
-}
-
-- (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
-{
-    CLLocationCoordinate2D zoomLocation;
-    zoomLocation.latitude = self.myMapView.userLocation.location.coordinate.latitude; // your latitude value
-    zoomLocation.longitude= self.myMapView.userLocation.location.coordinate.latitude; // your longitude value
-    MKCoordinateRegion region;
-    MKCoordinateSpan span;
-    span = MKCoordinateSpanMake(50, 50);
-    region.span=span;
-    region.center= zoomLocation;
-    [self.myMapView setRegion:region animated:TRUE];
+    self.myMapView.showsUserLocation = YES;
 
 }
 
@@ -67,19 +61,14 @@
     }
 }
 
-
-- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations{
-
-        CLLocation *loc = [locations lastObject];
-        CLLocationCoordinate2D location = [loc coordinate];
-        
-        //      set center the map at the current position
-        MKCoordinateRegion region           = MKCoordinateRegionMakeWithDistance(location, 400, 400);
-    
-        NSLog(@"Updating Location to %f %f", location.latitude, location.longitude);
-    
-        [self.myMapView setRegion: region animated:YES];
-
+-(void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation {
+    NSLog(@"Location: %f, %f",
+          userLocation.location.coordinate.latitude,
+          userLocation.location.coordinate.longitude);
+    MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(userLocation.location.coordinate, 250, 250);
+    //you can set zoom to 50000 on each to make it nicely zoomed out
+    [self.myMapView setRegion:region animated:YES];
 }
+
 
 @end
