@@ -54,7 +54,32 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pLe-XW-9x5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="87" y="72"/>
+            <point key="canvasLocation" x="-667" y="82"/>
+        </scene>
+        <!--Web View Controller-->
+        <scene sceneID="iKV-rB-2sh">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3lq-tt-F5v" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <viewController id="oXA-ZE-8eM" customClass="WebViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="6rm-Dp-flc"/>
+                        <viewControllerLayoutGuide type="bottom" id="BmU-Zf-SjR"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="9Fc-Sf-yyb">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <webView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1Yl-7I-sae">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            </webView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+            </objects>
+            <point key="canvasLocation" x="-217" y="110"/>
         </scene>
     </scenes>
     <resources>

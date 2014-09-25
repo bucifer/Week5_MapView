@@ -7,6 +7,7 @@
 //
 
 #import "MapViewController.h"
+#import "WebViewController.h"
 
 @interface MapViewController ()
 
@@ -40,6 +41,7 @@
     [self.myMapView addAnnotation:TTTannotation];
     [self.myMapView selectAnnotation:TTTannotation animated:YES];
 }
+
 
 - (void)requestDataFromAPI:(MKUserLocation *)userLocation {
     //initialize your responseData here
@@ -145,6 +147,7 @@
         
         [annotation setCoordinate:restaurantCoordinate];
         [annotation setTitle:restaurantName];
+        
         annotation.subtitle = [restaurantObject objectForKey:@"icon"];
         
         [self.myMapView addAnnotation:annotation];
