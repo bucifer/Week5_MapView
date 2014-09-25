@@ -27,14 +27,6 @@
     self.locationManager = [[CLLocationManager alloc]init];
     [self.locationManager setDelegate:self];
     [self.locationManager setDesiredAccuracy:kCLLocationAccuracyBest];
-    [self.locationManager startUpdatingLocation];
-
-    
-    //Place a single pin
-    MKPointAnnotation *annotation = [[MKPointAnnotation alloc]init];
-    [annotation setCoordinate:self.locationManager.location.coordinate];
-    [annotation setTitle:@"YO"];
-    [self.myMapView addAnnotation:annotation];
     
     self.myMapView.showsUserLocation = YES;
 
@@ -65,9 +57,18 @@
     NSLog(@"Location: %f, %f",
           userLocation.location.coordinate.latitude,
           userLocation.location.coordinate.longitude);
-    MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(userLocation.location.coordinate, 250, 250);
+    MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(userLocation.location.coordinate, 1000, 1000);
     //you can set zoom to 50000 on each to make it nicely zoomed out
     [self.myMapView setRegion:region animated:YES];
+    
+    //Place a single pin
+    MKPointAnnotation *annotation = [[MKPointAnnotation alloc]init];
+    [annotation setCoordinate:userLocation.coordinate];
+    [annotation setTitle:@"You are here"];
+    annotation.subtitle = @"I'm telling you that you are here as a subtitle";
+    
+    [self.myMapView addAnnotation:annotation];
+    [self.myMapView selectAnnotation:annotation animated:YES];
 }
 
 
