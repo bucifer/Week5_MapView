@@ -22,21 +22,33 @@
     self.myMapView.delegate = self;
     //you need to set the delegate of the mapview to the Viewcontroller so that the Viewcontroller starts listening to all the mapview's delegeate methods - i forgot this and that's why its update methods didn't work
     
-    self.locationManager = [[CLLocationManager alloc]init];
-    [self.locationManager setDelegate:self];
-    [self.locationManager setDesiredAccuracy:kCLLocationAccuracyBest];
-    [self.locationManager startUpdatingLocation];
-    self.responseData = [NSMutableData data];
-    [self getDataFromAPI];
+//    I thought i needed CLLocationManager for htis problem .. but no! MapKit takes cares of everything
+//    self.locationManager = [[CLLocationManager alloc]init];
+//    [self.locationManager setDelegate:self];
+//    [self.locationManager setDesiredAccuracy:kCLLocationAccuracyBest];
     
     self.myMapView.showsUserLocation = YES;
 
+    //Place a single pin on TurnToTech
+    MKPointAnnotation *TTTannotation = [[MKPointAnnotation alloc]init];
+    CLLocationCoordinate2D TTTCoordinate;
+    TTTCoordinate.latitude = 40.741444;
+    TTTCoordinate.longitude = -73.990070;
+    [TTTannotation setCoordinate:TTTCoordinate];
+    [TTTannotation setTitle:@"TurnToTech"];
+    TTTannotation.subtitle = @"Subtitle: You are here!!!";
+    [self.myMapView addAnnotation:TTTannotation];
+    [self.myMapView selectAnnotation:TTTannotation animated:YES];
 }
 
-- (void)getDataFromAPI {
-    //Create the request for asynchronous download
+- (void)requestDataFromAPI:(MKUserLocation *)userLocation {
+    //initialize your responseData here
+    self.responseData = [NSMutableData data];
     
-    NSString *requestString = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=%f,%f&radius=500&types=restaurant&key=AIzaSyCdMoZiea0Z96EhH8cc3No7KJHv2rjey_c", self.locationManager.location.coordinate.latitude, self.locationManager.location.coordinate.longitude];
+    NSString *myAPIKey = @"AIzaSyCdMoZiea0Z96EhH8cc3No7KJHv2rjey_c";
+    
+    NSString *requestString = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=%f,%f&radius=1000&types=restaurant&opennow=1&key=%@", userLocation.location.coordinate.latitude, userLocation.location.coordinate.longitude, myAPIKey];
+    
     NSURL *APIRequestURL = [NSURL URLWithString:requestString];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:APIRequestURL];
     request.HTTPMethod = @"GET";
@@ -82,6 +94,8 @@
     
     [self.myMapView addAnnotation:annotation];
     [self.myMapView selectAnnotation:annotation animated:YES];
+    
+    [self requestDataFromAPI:userLocation];
 }
 
 #pragma mark NSURLConnection Delegate Methods
@@ -105,18 +119,22 @@
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
-    //this handler, gets hit ONCE
+    //this handler gets hit ONCE
     // The request is complete and data has been received
-    // You can parse the stuff in your instance variable now or do whatever you want
+    // You can parse the stuff in your data variable now or do whatever you want
 
     NSLog(@"connection finished");
     NSLog(@"Succeeded! Received %d bytes of data",[self.responseData length]);
     //Convert your responseData object
-    
     NSError *myError = nil;
     NSDictionary *responseDataInNSDictionary = [NSJSONSerialization JSONObjectWithData:self.responseData options:NSJSONReadingMutableLeaves error:&myError];
     
-    NSLog(responseDataInNSDictionary.description);
+    NSArray *resultsArray = [responseDataInNSDictionary objectForKey:@"results"];
+    for (int i=0; i < resultsArray.count; i++) {
+        NSDictionary *restaurantObject = resultsArray[i];
+        NSString *restaurantName = [restaurantObject objectForKey:@"name"];
+        NSLog(@"%@", restaurantName);
+    }
     
 }
 

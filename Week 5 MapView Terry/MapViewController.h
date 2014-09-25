@@ -13,11 +13,8 @@
 @interface MapViewController : UIViewController
 <CLLocationManagerDelegate, MKMapViewDelegate, NSURLConnectionDelegate>
 
-@property CLLocationManager *locationManager;
-
 @property (strong, nonatomic) IBOutlet UIImageView *myImageView;
 @property (strong, nonatomic) IBOutlet MKMapView *myMapView;
-
 @property (strong, nonatomic) NSMutableData *responseData;
 
 
@@ -26,7 +23,7 @@
 
 //class methods
 
-- (void) getDataFromAPI;
+- (void) requestDataFromAPI:(MKUserLocation *)userLocation;
 
 
 @end
