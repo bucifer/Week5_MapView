@@ -27,7 +27,7 @@
                                 <rect key="frame" x="0.0" y="75" width="320" height="493"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             </mapView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xKh-Yi-d7J">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="bulbasaur.png" translatesAutoresizingMaskIntoConstraints="NO" id="xKh-Yi-d7J">
                                 <rect key="frame" x="0.0" y="75" width="106" height="95"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
@@ -57,6 +57,9 @@
             <point key="canvasLocation" x="87" y="72"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="bulbasaur.png" width="96" height="96"/>
+    </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

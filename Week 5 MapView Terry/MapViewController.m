@@ -24,9 +24,26 @@
     self.locationManager = [[CLLocationManager alloc]init];
     [self.locationManager setDelegate:self];
     [self.locationManager setDesiredAccuracy:kCLLocationAccuracyBest];
+    [self.locationManager startUpdatingLocation];
 
-    self.myMapView.showsUserLocation = YES;
     
+    self.myMapView.showsUserLocation = YES;
+
+    
+}
+
+- (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
+{
+    CLLocationCoordinate2D zoomLocation;
+    zoomLocation.latitude = self.myMapView.userLocation.location.coordinate.latitude; // your latitude value
+    zoomLocation.longitude= self.myMapView.userLocation.location.coordinate.latitude; // your longitude value
+    MKCoordinateRegion region;
+    MKCoordinateSpan span;
+    span = MKCoordinateSpanMake(50, 50);
+    region.span=span;
+    region.center= zoomLocation;
+    [self.myMapView setRegion:region animated:TRUE];
+
 }
 
 - (void)didReceiveMemoryWarning
@@ -51,6 +68,18 @@
 }
 
 
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations{
 
+        CLLocation *loc = [locations lastObject];
+        CLLocationCoordinate2D location = [loc coordinate];
+        
+        //      set center the map at the current position
+        MKCoordinateRegion region           = MKCoordinateRegionMakeWithDistance(location, 400, 400);
+    
+        NSLog(@"Updating Location to %f %f", location.latitude, location.longitude);
+    
+        [self.myMapView setRegion: region animated:YES];
+
+}
 
 @end
