@@ -8,6 +8,7 @@
 
 #import "MapViewController.h"
 #import "WebViewController.h"
+#import "RestaurantPointAnnotation.h"
 
 @interface MapViewController ()
 
@@ -89,18 +90,18 @@
     NSLog(@"Location: %f, %f",
           userLocation.location.coordinate.latitude,
           userLocation.location.coordinate.longitude);
-    MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(userLocation.location.coordinate, 1000, 1000);
+    MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(userLocation.location.coordinate, 2000, 2000);
+    
     //you can set zoom to 50000 on each to make it nicely zoomed out
     [self.myMapView setRegion:region animated:YES];
     
-    //Place a single pin
-    MKPointAnnotation *annotation = [[MKPointAnnotation alloc]init];
-    [annotation setCoordinate:userLocation.coordinate];
-    [annotation setTitle:@"You are here"];
-    annotation.subtitle = @"GPS say that you are here";
-    
-    [self.myMapView addAnnotation:annotation];
-    [self.myMapView selectAnnotation:annotation animated:YES];
+    //Place a single pin at where you are
+//    MKPointAnnotation *annotation = [[MKPointAnnotation alloc]init];
+//    [annotation setCoordinate:userLocation.coordinate];
+//    [annotation setTitle:@"You are here"];
+//    annotation.subtitle = @"GPS say that you are here";
+//    [self.myMapView addAnnotation:annotation];
+//    [self.myMapView selectAnnotation:annotation animated:YES];
     
     [self requestDataFromAPI:userLocation];
 }
@@ -146,7 +147,7 @@
         NSLog(@"%@ %@", [locationObject objectForKey:@"lat"], [locationObject objectForKey:@"lng"]);
         
         //Place the pin on these restaurants
-        MKPointAnnotation *annotation = [[MKPointAnnotation alloc]init];
+        RestaurantPointAnnotation *annotation = [[RestaurantPointAnnotation alloc]init];
         
         CLLocationCoordinate2D restaurantCoordinate = CLLocationCoordinate2DMake([[locationObject objectForKey:@"lat"] doubleValue], [[locationObject objectForKey:@"lng"] doubleValue]);
         
@@ -161,11 +162,20 @@
 
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation
 {
-    MKAnnotationView *annotationView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"loc"];
-    annotationView.canShowCallout = YES;
-    annotationView.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
-    
-    return annotationView;
+    if ([annotation isKindOfClass:[MKUserLocation class]]) {
+        return nil;
+    }
+    else if ([annotation isKindOfClass:[RestaurantPointAnnotation class]]) {
+        MKAnnotationView *annotationView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"loc"];
+        annotationView.canShowCallout = YES;
+        annotationView.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+        return annotationView;
+    }
+    else {
+        MKAnnotationView *annotationView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"loc"];
+        annotationView.canShowCallout = YES;
+        return annotationView;
+    }
 }
 
 - (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control
