@@ -16,7 +16,7 @@
 @property (strong, nonatomic) IBOutlet UIImageView *myImageView;
 @property (strong, nonatomic) IBOutlet MKMapView *myMapView;
 @property (strong, nonatomic) NSMutableData *responseData;
-
+@property (strong, nonatomic) NSString* url;
 
 - (IBAction)segmentMapSelection:(id)sender;
 

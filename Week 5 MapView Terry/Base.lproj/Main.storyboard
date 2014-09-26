@@ -79,6 +79,9 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" id="0WJ-HU-Rfq"/>
+                    <connections>
+                        <outlet property="myWebView" destination="1Yl-7I-sae" id="B6i-Qs-GHL"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3lq-tt-F5v" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

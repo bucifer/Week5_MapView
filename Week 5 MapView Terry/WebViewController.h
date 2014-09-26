@@ -10,4 +10,8 @@
 
 @interface WebViewController : UIViewController
 
+@property (strong, nonatomic) NSString* url;
+
+@property (strong, nonatomic) IBOutlet UIWebView *myWebView;
+
 @end

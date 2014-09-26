@@ -45,7 +45,8 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
 
-    
+    WebViewController *webVC = [segue destinationViewController];
+    webVC.url = self.url;
 }
 
 
@@ -155,6 +156,7 @@
         [annotation setTitle:restaurantName];
         
         annotation.subtitle = [restaurantObject objectForKey:@"icon"];
+        self.url = annotation.subtitle;
         
         [self.myMapView addAnnotation:annotation];
     }

@@ -29,6 +29,10 @@
 	// Do any additional setup after loading the view.
 }
 
+- (void) viewDidAppear:(BOOL)animated {
+    [self.myWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.url] ] ];
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
