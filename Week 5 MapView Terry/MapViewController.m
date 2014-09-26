@@ -42,6 +42,11 @@
     [self.myMapView selectAnnotation:TTTannotation animated:YES];
 }
 
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+
+    
+}
+
 
 - (void)requestDataFromAPI:(MKUserLocation *)userLocation {
     //initialize your responseData here
@@ -165,8 +170,8 @@
 
 - (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control
 {
-    WebViewController *webVC = [[WebViewController alloc] initWithNibName:@"WebViewController" bundle:nil];
-    [self.navigationController pushViewController:webVC animated:YES];
+    // Perform Segue
+    [self performSegueWithIdentifier:@"webViewSegue" sender:self];
 }
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
